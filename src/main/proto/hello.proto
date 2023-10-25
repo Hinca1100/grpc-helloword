@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+enum UserStatus {
+    UNKNOWN = 0;
+    OFFLINE = 1;
+    BUSY = 2;
+    AVAILABLE = 3;
+}
+
+service HelloWorldService {
+  rpc GetUser(UserRequest) returns (User) {};
+  rpc CreateUser(stream User) returns (Empty) {}
+  rpc GetUsers(Empty) returns (stream User) {};
+  rpc UpdateUser (UserResponse) returns (SuccessMessage) {}
+  rpc DeleteUser (UserID) returns (SuccessMessage) {}
+}
+
+message User {
+    string name = 1;
+    int32 age = 2;
+    string gender = 3;
+    UserStatus status = 4;
+    repeated Interest interests = 5;
+}
+
+message UserRequest {
+    int32 id = 1;
+}
+
+message UserResponse {
+  string name = 1;
+  int32 age = 2;
+  string gender = 3;
+  UserStatus status = 4;
+  repeated InterestResponse interests = 5;
+  int32 id = 6;
+}
+
+message SuccessMessage {
+  string message = 1;
+}
+
+message UserID {
+  string id = 1;
+}
+
+message Interest {
+  string name = 1;
+}
+
+message InterestResponse {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message Empty {}
